@@ -1,0 +1,109 @@
+---
+import AccordionItem from './AccordionItem.astro';
+import { categories } from '../data/categories';
+---
+
+<div class="relative">
+  <button
+    id="categories-button"
+    class="flex items-center text-white hover:text-blue-200 focus:outline-none"
+    aria-label="Categorías"
+  >
+    <svg 
+      width="28" 
+      height="20" 
+      viewBox="0 0 28 20" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      class="stroke-current"
+    >
+      <path d="M2 2H26" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M2 10H26" stroke-width="3" stroke-linecap="round"></path>
+      <path d="M2 18H14.6316" stroke-width="3" stroke-linecap="round"></path>
+    </svg>
+  </button>
+
+  <div 
+    id="categories-menu" 
+    class="hidden absolute left-0 mt-2 w-64 bg-white rounded-lg shadow-lg overflow-hidden z-10
+    transform opacity-0 scale-95 transition-all duration-200 ease-out origin-top-left"
+  >
+    <div class="border-b px-4 py-3 flex items-center justify-between">
+      <h2 class="text-lg font-semibold text-gray-800">Categorías</h2>
+      <button id="close-menu" class="text-gray-500 hover:text-gray-700">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="accordion">
+      {categories.map(category => (
+        <AccordionItem 
+          title={category.title}
+          href={category.href}
+          items={category.items}
+        />
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const categoriesButton = document.getElementById('categories-button');
+  const categoriesMenu = document.getElementById('categories-menu');
+  const closeMenu = document.getElementById('close-menu');
+
+  function showMenu() {
+    categoriesMenu?.classList.remove('hidden');
+    // Force a reflow before adding the classes
+    categoriesMenu?.offsetHeight;
+    categoriesMenu?.classList.remove('opacity-0', 'scale-95');
+  }
+
+  function hideMenu() {
+    categoriesMenu?.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      categoriesMenu?.classList.add('hidden');
+    }, 200);
+  }
+
+  categoriesButton?.addEventListener('click', showMenu);
+  closeMenu?.addEventListener('click', hideMenu);
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    if (!categoriesButton?.contains(event.target as Node) && 
+        !categoriesMenu?.contains(event.target as Node)) {
+      hideMenu();
+    }
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideMenu();
+    }
+  });
+</script>
+
+<style>
+  .accordion {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+  }
+
+  .accordion::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .accordion::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+
+  .accordion::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 3px;
+  }
+</style>

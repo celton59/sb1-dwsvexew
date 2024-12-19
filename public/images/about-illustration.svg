@@ -1,0 +1,63 @@
+<svg width="600" height="600" viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo decorativo -->
+  <circle cx="300" cy="300" r="280" fill="#EBF4FF" opacity="0.5"/>
+  <circle cx="300" cy="300" r="200" fill="#DBEAFE" opacity="0.3"/>
+  
+  <!-- Laptop base -->
+  <path d="M150 250H450V400H150V250Z" fill="#2563EB"/>
+  <path d="M120 400H480V420C480 425.523 475.523 430 470 430H130C124.477 430 120 425.523 120 420V400Z" fill="#1D4ED8"/>
+  
+  <!-- Pantalla -->
+  <rect x="170" y="270" width="260" height="110" rx="2" fill="white"/>
+  
+  <!-- Código en la pantalla -->
+  <rect x="190" y="290" width="100" height="10" rx="2" fill="#FF7A00"/>
+  <rect x="190" y="310" width="160" height="10" rx="2" fill="#E2E8F0"/>
+  <rect x="190" y="330" width="140" height="10" rx="2" fill="#E2E8F0"/>
+  <rect x="190" y="350" width="120" height="10" rx="2" fill="#FF7A00"/>
+  
+  <!-- Elementos flotantes -->
+  <circle cx="450" cy="200" r="30" fill="#FF7A00" opacity="0.2"/>
+  <circle cx="150" cy="350" r="40" fill="#2563EB" opacity="0.1"/>
+  
+  <!-- Iconos flotantes -->
+  <g transform="translate(400,150)">
+    <rect width="60" height="60" rx="30" fill="#2563EB"/>
+    <text x="30" y="40" text-anchor="middle" fill="white" font-size="30">⚡</text>
+  </g>
+  
+  <g transform="translate(120,200)">
+    <rect width="50" height="50" rx="25" fill="#FF7A00"/>
+    <text x="25" y="35" text-anchor="middle" fill="white" font-size="25">💡</text>
+  </g>
+  
+  <g transform="translate(450,350)">
+    <rect width="40" height="40" rx="20" fill="#2563EB"/>
+    <text x="20" y="28" text-anchor="middle" fill="white" font-size="20">🚀</text>
+  </g>
+  
+  <!-- Líneas decorativas -->
+  <path d="M50 300C50 300 150 250 300 250C450 250 550 300 550 300" stroke="#2563EB" stroke-width="2" stroke-dasharray="10 5" opacity="0.3"/>
+  
+  <!-- Burbujas de estadísticas -->
+  <g transform="translate(400,100)">
+    <circle cx="0" cy="0" r="40" fill="#FF7A00"/>
+    <text x="0" y="5" text-anchor="middle" fill="white" font-size="20" font-weight="bold">67</text>
+    <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">Posts</text>
+  </g>
+  
+  <g transform="translate(180,150)">
+    <circle cx="0" cy="0" r="35" fill="#2563EB"/>
+    <text x="0" y="5" text-anchor="middle" fill="white" font-size="20" font-weight="bold">37</text>
+    <text x="0" y="25" text-anchor="middle" fill="white" font-size="12">Likes</text>
+  </g>
+
+  <!-- Detalles adicionales -->
+  <path d="M280 150C280 150 320 130 360 150" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+  <path d="M320 180C320 180 340 160 360 180" stroke="#FF7A00" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- Puntos decorativos -->
+  <circle cx="250" cy="160" r="4" fill="#2563EB"/>
+  <circle cx="380" cy="140" r="4" fill="#FF7A00"/>
+  <circle cx="420" cy="200" r="4" fill="#2563EB"/>
+</svg>

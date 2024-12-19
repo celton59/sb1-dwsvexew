@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+
+// Use a fallback URL if Astro.site is not available
+const baseUrl = Astro.site?.toString() || 'https://aitorin.com';
+const shareUrl = new URL(Astro.url.pathname, baseUrl).toString();
+const shareText = `¡Mira este artículo: ${post.data.title}!`;
+
+const shareLinks = [
+  {
+    name: 'Twitter',
+    icon: '🐦',
+    url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
+  },
+  {
+    name: 'Facebook',
+    icon: '📘',
+    url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`
+  },
+  {
+    name: 'LinkedIn',
+    icon: '💼',
+    url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(post.data.title)}`
+  }
+];
+---
+
+<div class="bg-gray-50 rounded-xl p-6">
+  <h2 class="text-lg font-semibold mb-4">Compartir</h2>
+  <div class="flex gap-2">
+    {shareLinks.map(link => (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex-1 flex items-center justify-center gap-2 py-2 px-4 bg-white rounded-lg
+          border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+        aria-label={`Compartir en ${link.name}`}
+      >
+        <span class="text-xl">{link.icon}</span>
+      </a>
+    ))}
+  </div>
+</div>

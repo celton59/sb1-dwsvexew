@@ -1,0 +1,45 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  title: string;
+  steps?: string[];
+  faqs?: { question: string; }[];
+}
+
+const { title, steps = [], faqs = [] } = Astro.props;
+---
+
+<div class="my-6 bg-gray-50 rounded-lg border border-gray-200 p-6">
+  <h2 class="text-xl font-semibold mb-4">Índice</h2>
+  <p class="font-medium text-gray-900 mb-3">{title}</p>
+
+  {steps.length > 0 && (
+    <div class="space-y-2 mb-6">
+      {steps.map((step, index) => (
+        <a 
+          href={`#${step.toLowerCase().replace(/\s+/g, '-')}`}
+          class="block text-blue-600 hover:text-blue-800 transition-colors"
+        >
+          {step}
+        </a>
+      ))}
+    </div>
+  )}
+
+  {faqs.length > 0 && (
+    <div class="mt-4">
+      <h3 class="font-medium text-gray-900 mb-3">Preguntas de nuestros usuarios</h3>
+      <div class="space-y-2">
+        {faqs.map((faq, index) => (
+          <a 
+            href={`#faq-${index + 1}`}
+            class="block text-blue-600 hover:text-blue-800 transition-colors"
+          >
+            {faq.question}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</div>

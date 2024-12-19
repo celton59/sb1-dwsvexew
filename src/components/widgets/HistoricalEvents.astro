@@ -1,0 +1,56 @@
+---
+import SectionTitle from '../titles/SectionTitle.astro';
+import CurrentDate from './CurrentDate.astro';
+import { getHistoricalEvents } from '../../utils/historical';
+
+const events = getHistoricalEvents();
+---
+
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8">
+    <SectionTitle text="Acontecimientos históricos" />
+    <CurrentDate />
+    
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {events.map(event => (
+        <div class="relative bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group">
+          <!-- Decorative elements -->
+          <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-full opacity-30 group-hover:scale-110 transition-transform"></div>
+          <div class="absolute bottom-0 left-0 w-16 h-16 bg-indigo-50 rounded-tr-full opacity-30 group-hover:scale-110 transition-transform"></div>
+          
+          <div class="relative p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="relative">
+                <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 
+                  flex items-center justify-center text-2xl text-white transform 
+                  group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  {event.icon}
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-orange-400 rounded-lg 
+                  flex items-center justify-center text-xs text-white font-bold
+                  group-hover:scale-110 transition-transform">
+                  {event.year.toString().slice(-2)}
+                </div>
+              </div>
+              <div>
+                <span class="text-sm text-blue-600 font-medium bg-blue-50 px-3 py-1 rounded-full">
+                  {event.year}
+                </span>
+                <h3 class="text-lg font-semibold mt-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+                  {event.title}
+                </h3>
+              </div>
+            </div>
+            <p class="text-gray-600 text-sm leading-relaxed">
+              {event.description}
+            </p>
+            
+            <!-- Timeline indicator -->
+            <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-indigo-600 
+              opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

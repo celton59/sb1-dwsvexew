@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import SectionTitle from './titles/SectionTitle.astro';
+import FeaturedArticleCard from './articles/FeaturedArticleCard.astro';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const [mainPost, ...secondaryPosts] = posts.slice(0, 6);
+---
+
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <SectionTitle text="Artículos destacados" />
+  
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+    <!-- Main Featured Article -->
+    <div class="lg:col-span-8">
+      <FeaturedArticleCard post={mainPost} featured={true} />
+    </div>
+
+    <!-- Secondary Articles -->
+    <div class="lg:col-span-4 grid grid-cols-1 gap-6">
+      {secondaryPosts.slice(0, 2).map(post => (
+        <FeaturedArticleCard post={post} compact={true} />
+      ))}
+    </div>
+
+    <!-- Bottom Row Articles -->
+    <div class="lg:col-span-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      {secondaryPosts.slice(2, 5).map(post => (
+        <FeaturedArticleCard post={post} />
+      ))}
+    </div>
+  </div>
+</section>

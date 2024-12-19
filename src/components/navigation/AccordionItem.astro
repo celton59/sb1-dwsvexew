@@ -1,0 +1,79 @@
+---
+import AccordionIcon from '../icons/AccordionIcon.astro';
+import CategoryItem from './CategoryItem.astro';
+import type { Category } from '../../types/navigation';
+
+interface Props extends Category {}
+
+const { title, href, items } = Astro.props;
+---
+
+<div class="accordion-item" data-accordion>
+  <div class="accordion-heading">
+    <div class="accordion-title">
+      <a href={href} class="text-gray-700 hover:text-blue-600">{title}</a>
+    </div>
+    <button class="accordion-toggle p-2" aria-label="Toggle accordion">
+      <AccordionIcon />
+    </button>
+  </div>
+  <div class="accordion-content hidden">
+    <ul class="py-2">
+      {items.map(item => (
+        <CategoryItem item={item} />
+      ))}
+    </ul>
+  </div>
+</div>
+
+<script>
+  const accordions = document.querySelectorAll('[data-accordion]');
+  const subcategories = document.querySelectorAll('[data-subcategory]');
+  
+  // Principal accordion
+  accordions.forEach(accordion => {
+    const toggle = accordion.querySelector('.accordion-toggle');
+    const content = accordion.querySelector('.accordion-content');
+    const icon = toggle?.querySelector('svg');
+    
+    toggle?.addEventListener('click', (e) => {
+      e.preventDefault();
+      content?.classList.toggle('hidden');
+      icon?.classList.toggle('rotate-45');
+    });
+  });
+
+  // Subcategorías
+  subcategories.forEach(item => {
+    const toggle = item.querySelector('.subcategory-toggle');
+    const content = item.querySelector('.subcategories');
+    const icon = toggle?.querySelector('svg');
+    
+    toggle?.addEventListener('click', (e) => {
+      e.preventDefault();
+      content?.classList.toggle('hidden');
+      icon?.classList.toggle('rotate-45');
+    });
+  });
+</script>
+
+<style>
+  .accordion-item {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .accordion-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .accordion-toggle {
+    color: #666;
+  }
+  
+  .accordion-content {
+    background-color: #f9fafb;
+  }
+</style>

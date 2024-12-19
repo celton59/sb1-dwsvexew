@@ -1,0 +1,38 @@
+---
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import LegalSection from '../../components/legal/LegalSection.astro';
+---
+
+<LegalLayout 
+  title="Política de Cookies"
+  description="Información sobre cómo utilizamos las cookies y tecnologías similares en nuestro sitio web."
+>
+  <LegalSection title="1. ¿Qué son las cookies?" id="que-son">
+    <p>Las cookies son pequeños archivos de texto que los sitios web colocan en tu dispositivo para:</p>
+    <ul>
+      <li>Recordar tus preferencias</li>
+      <li>Entender cómo interactúas con el sitio</li>
+      <li>Mejorar tu experiencia de navegación</li>
+    </ul>
+  </LegalSection>
+
+  <LegalSection title="2. Tipos de cookies que utilizamos" id="tipos">
+    <h3 class="text-xl font-medium mb-2">Cookies necesarias</h3>
+    <p class="mb-4">Esenciales para el funcionamiento básico del sitio. No pueden ser desactivadas.</p>
+
+    <h3 class="text-xl font-medium mb-2">Cookies analíticas</h3>
+    <p class="mb-4">Nos ayudan a entender cómo interactúas con el sitio y mejorar su funcionamiento.</p>
+
+    <h3 class="text-xl font-medium mb-2">Cookies de preferencias</h3>
+    <p>Permiten recordar tus ajustes y preferencias para una mejor experiencia.</p>
+  </LegalSection>
+
+  <LegalSection title="3. Control de cookies" id="control">
+    <p>Puedes gestionar las cookies de varias formas:</p>
+    <ul>
+      <li>Configuración del navegador</li>
+      <li>Panel de preferencias de cookies</li>
+      <li>Herramientas de terceros</li>
+    </ul>
+  </LegalSection>
+</LegalLayout>

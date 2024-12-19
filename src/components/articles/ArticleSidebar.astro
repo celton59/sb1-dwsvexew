@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import TableOfContents from './TableOfContents.astro';
+import ShareButtons from './ShareButtons.astro';
+import AuthorCard from './AuthorCard.astro';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { headings } = await post.render();
+---
+
+<div class="space-y-8 sticky top-24">
+  <TableOfContents headings={headings} />
+  <ShareButtons post={post} />
+  <AuthorCard />
+</div>

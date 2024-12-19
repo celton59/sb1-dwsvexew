@@ -1,0 +1,37 @@
+---
+import AdminSidebar from '../components/admin/navigation/AdminSidebar.astro';
+import AdminHeader from '../components/admin/navigation/AdminHeader.astro';
+import { isAuthenticated } from '../utils/auth';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Check authentication
+if (!await isAuthenticated(Astro)) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} - Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-gray-50">
+    <div class="flex h-screen">
+      <AdminSidebar />
+      <div class="flex-1 flex flex-col overflow-hidden">
+        <AdminHeader />
+        <main class="flex-1 overflow-y-auto p-6">
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

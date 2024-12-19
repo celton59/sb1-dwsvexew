@@ -1,0 +1,44 @@
+---
+import FooterLinks from './FooterLinks.astro';
+import FooterNewsletter from './FooterNewsletter.astro';
+import FooterSocial from './FooterSocial.astro';
+import Logo from '../icons/Logo.astro';
+---
+
+<footer class="bg-[#0d47a1] mt-12">
+  <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Logo and Description -->
+      <div class="lg:col-span-4">
+        <a href="/" class="block mb-4">
+          <Logo class="h-16 w-auto" />
+        </a>
+        <p class="text-blue-100 text-sm leading-relaxed">
+          Tu fuente confiable de tutoriales y guías sobre tecnología. 
+          Aprende, descubre y mantente actualizado con las últimas tendencias digitales.
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div class="lg:col-span-4">
+        <FooterLinks />
+      </div>
+
+      <!-- Newsletter -->
+      <div class="lg:col-span-4">
+        <FooterNewsletter />
+      </div>
+    </div>
+
+    <hr class="my-8 border-blue-800" />
+    
+    <!-- Bottom Section -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <FooterSocial />
+      
+      <div class="text-sm text-blue-100">
+        © {new Date().getFullYear()} Aitorin.com. Todos los derechos reservados.
+      </div>
+    </div>
+  </div>
+</footer>

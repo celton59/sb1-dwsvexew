@@ -1,0 +1,102 @@
+---
+const links = [
+  { name: 'Aplicaciones', href: '/categoria/aplicaciones' },
+  { name: 'Dispositivos', href: '/categoria/dispositivos' },
+  { name: 'Email', href: '/categoria/email' },
+  { name: 'Entretenimiento', href: '/categoria/entretenimiento' },
+  { name: 'Redes sociales', href: '/categoria/redes-sociales' },
+  { name: 'Sistemas operativos', href: '/categoria/sistemas-operativos' },
+  { name: 'Videojuegos', href: '/categoria/videojuegos' },
+];
+---
+
+<div class="bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <nav class="quick-access-nav">
+      <ul class="flex items-center justify-between overflow-x-auto">
+        {links.map((link, index) => (
+          <li class="quick-access-item">
+            <a href={link.href} class="quick-access-link group">
+              <span class="relative">
+                {link.name}
+                <span class="link-indicator"></span>
+              </span>
+            </a>
+            {index < links.length - 1 && (
+              <span class="connector"></span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<style>
+  .quick-access-nav {
+    position: relative;
+    padding: 0.5rem 0; /* Reduced from 1rem */
+  }
+
+  .quick-access-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .quick-access-link {
+    position: relative;
+    padding: 0.375rem 0.75rem; /* Reduced from 0.5rem 1rem */
+    font-size: 0.875rem;
+    color: #4B5563;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .quick-access-link:hover {
+    color: #2563EB;
+  }
+
+  .link-indicator {
+    position: absolute;
+    left: 0;
+    bottom: -3px; /* Reduced from -4px */
+    width: 100%;
+    height: 2px;
+    background-color: #2563EB;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: left;
+  }
+
+  .quick-access-link:hover .link-indicator {
+    transform: scaleX(1);
+  }
+
+  .connector {
+    width: 1px;
+    height: 16px; /* Reduced from 20px */
+    background: linear-gradient(to bottom, transparent, #E5E7EB 30%, #E5E7EB 70%, transparent);
+    margin: 0 0.375rem; /* Reduced from 0.5rem */
+  }
+
+  /* Scrollbar personalizado */
+  .quick-access-nav ul {
+    scrollbar-width: thin;
+    scrollbar-color: #CBD5E1 transparent;
+  }
+
+  .quick-access-nav ul::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .quick-access-nav ul::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .quick-access-nav ul::-webkit-scrollbar-thumb {
+    background-color: #CBD5E1;
+    border-radius: 2px;
+  }
+</style>

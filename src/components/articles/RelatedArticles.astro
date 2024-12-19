@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import ArticleCard from './ArticleCard.astro';
+
+interface Props {
+  currentPost: CollectionEntry<'posts'>;
+}
+
+const { currentPost } = Astro.props;
+
+// Get related posts based on tags
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter(post => post.id !== currentPost.id)
+  .filter(post => post.data.tags.some(tag => currentPost.data.tags.includes(tag)))
+  .slice(0, 3);
+---
+
+<section class="max-w-6xl mx-auto px-4 py-12">
+  <h2 class="text-2xl font-bold mb-6">Artículos relacionados</h2>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {relatedPosts.map(post => (
+      <ArticleCard post={post} />
+    ))}
+  </div>
+</section>

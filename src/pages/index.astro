@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import QuickAccess from '../components/QuickAccess.astro';
+import FeaturedArticles from '../components/FeaturedArticles.astro';
+import TrendingTopics from '../components/widgets/TrendingTopics.astro';
+import HistoricalEvents from '../components/widgets/HistoricalEvents.astro';
+import AuthorsSection from '../components/widgets/AuthorsSection.astro';
+import AboutSection from '../components/widgets/AboutSection.astro';
+import ArticlesGrid from '../components/articles/ArticlesGrid.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Blog de Tutoriales y Afiliación">
+  <QuickAccess />
+  <FeaturedArticles />
+  <TrendingTopics />
+  <HistoricalEvents />
+  <AuthorsSection />
+  
+  <main class="max-w-6xl mx-auto px-4 py-4">
+    <h2 class="text-2xl font-bold mb-4">Últimos artículos</h2>
+    <ArticlesGrid posts={sortedPosts} />
+  </main>
+
+  <AboutSection />
+</Layout>

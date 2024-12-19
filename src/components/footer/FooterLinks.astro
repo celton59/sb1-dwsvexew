@@ -1,0 +1,39 @@
+---
+const links = {
+  "Categorías": [
+    { name: "Tutoriales", href: "/categoria/tutoriales" },
+    { name: "Reviews", href: "/categoria/reviews" },
+    { name: "Guías", href: "/categoria/guias" }
+  ],
+  "Recursos": [
+    { name: "Blog", href: "/blog" },
+    { name: "Herramientas", href: "/herramientas" },
+    { name: "FAQ", href: "/faq" }
+  ],
+  "Legal": [
+    { name: "Privacidad", href: "/legal/privacidad" },
+    { name: "Términos", href: "/legal/terminos" },
+    { name: "Cookies", href: "/legal/cookies" }
+  ]
+};
+---
+
+<div class="grid grid-cols-3 gap-8">
+  {Object.entries(links).map(([category, items]) => (
+    <div>
+      <h3 class="font-semibold text-white mb-3">{category}</h3>
+      <ul class="space-y-2">
+        {items.map(link => (
+          <li>
+            <a 
+              href={link.href}
+              class="text-blue-200 hover:text-white text-sm transition-colors"
+            >
+              {link.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>

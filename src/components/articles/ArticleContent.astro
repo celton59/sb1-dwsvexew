@@ -1,0 +1,48 @@
+---
+import type { MarkdownHeading } from 'astro';
+import CollapsibleToc from './CollapsibleToc.astro';
+
+interface Props {
+  headings?: MarkdownHeading[];
+  title: string;
+}
+
+const { headings = [], title } = Astro.props;
+---
+
+<div class="prose prose-lg max-w-none">
+  <div id="article-content">
+    <slot />
+  </div>
+  <CollapsibleToc headings={headings} title={title} />
+</div>
+
+<script>
+  // Insert TOC after the first paragraph
+  const content = document.getElementById('article-content');
+  const firstParagraph = content?.querySelector('p');
+  const toc = document.querySelector('[data-toc]');
+  
+  if (firstParagraph && toc) {
+    firstParagraph.insertAdjacentElement('afterend', toc);
+  }
+</script>
+
+<style is:global>
+  .prose {
+    max-width: none;
+  }
+
+  .prose h2 {
+    scroll-margin-top: 100px;
+  }
+
+  .prose a {
+    text-decoration: none;
+    color: #2563eb;
+  }
+
+  .prose a:hover {
+    text-decoration: underline;
+  }
+</style>

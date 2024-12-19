@@ -1,0 +1,40 @@
+---
+import type { Author } from '../../types/author';
+
+interface Props {
+  author: Author;
+}
+
+const { author } = Astro.props;
+---
+
+<div class="bg-gray-50 rounded-xl p-8 mt-12">
+  <div class="flex items-center gap-6">
+    <img 
+      src={author.avatar} 
+      alt={author.name}
+      class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-sm"
+    />
+    <div>
+      <h3 class="text-xl font-semibold text-gray-900">{author.name}</h3>
+      <p class="text-blue-600 font-medium">{author.role}</p>
+    </div>
+  </div>
+  
+  <p class="mt-4 text-gray-600 leading-relaxed">{author.bio}</p>
+  
+  <div class="flex items-center gap-4 mt-6">
+    {author.socialLinks.map(link => (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-10 h-10 flex items-center justify-center rounded-full bg-white shadow-sm
+          text-gray-600 hover:text-blue-600 hover:shadow-md transition-all"
+        title={link.platform}
+      >
+        <span class="text-xl">{link.icon}</span>
+      </a>
+    ))}
+  </div>
+</div>

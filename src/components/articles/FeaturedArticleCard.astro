@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+  featured?: boolean;
+  compact?: boolean;
+}
+
+const { post, featured = false, compact = false } = Astro.props;
+const { title, description, category, image, pubDate } = post.data;
+
+const imageHeight = featured ? 'h-[500px]' : compact ? 'h-[200px]' : 'h-[300px]';
+---
+
+<article class="group relative overflow-hidden rounded-xl bg-white shadow-sm hover:shadow-lg transition-all duration-300">
+  <a href={`/blog/${post.slug}`} class="block h-full">
+    {image && (
+      <div class="relative h-full">
+        <img 
+          src={image} 
+          alt={title}
+          class={`w-full object-cover ${imageHeight}`}
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent 
+          group-hover:from-black/90 group-hover:via-black/60 transition-all duration-300">
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 p-6 transform transition-transform duration-300 
+          group-hover:translate-y-[-8px]">
+          <div class="flex items-center gap-3 mb-3">
+            <span class="px-3 py-1 text-sm font-medium bg-orange-500 text-white rounded-full">
+              {category}
+            </span>
+            <time class="text-sm text-gray-300">
+              {pubDate.toLocaleDateString('es-ES', { dateStyle: 'medium' })}
+            </time>
+          </div>
+
+          <h3 class={`font-bold mb-2 text-white group-hover:text-orange-400 transition-colors
+            ${featured ? 'text-3xl' : compact ? 'text-lg' : 'text-xl'}`}>
+            {title}
+          </h3>
+          
+          {!compact && (
+            <p class={`text-gray-200 ${featured ? 'line-clamp-2' : 'line-clamp-1'}`}>
+              {description}
+            </p>
+          )}
+
+          <span class="inline-flex items-center text-orange-400 text-sm font-medium mt-3 
+            group-hover:translate-x-1 transition-transform duration-300">
+            Leer más
+            <svg class="w-4 h-4 ml-1" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M5 12h14m-7-7l7 7-7 7"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    )}
+  </a>
+</article>

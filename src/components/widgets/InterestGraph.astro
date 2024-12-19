@@ -1,0 +1,51 @@
+---
+import type { InterestStat } from '../../utils/stats';
+
+interface Props {
+  stats: InterestStat[];
+}
+
+const { stats } = Astro.props;
+const maxPercentage = Math.max(...stats.map(s => s.percentage));
+---
+
+<div class="relative h-80 bg-white rounded-xl p-6 shadow-sm">
+  <div class="absolute inset-0 flex items-end justify-around p-6">
+    {stats.map((stat) => {
+      const height = (stat.percentage / maxPercentage) * 100;
+      
+      return (
+        <div class="relative flex flex-col items-center w-1/4 group">
+          <div 
+            class="absolute -top-8 text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity"
+            style={`color: ${stat.color}`}
+          >
+            {stat.percentage}%
+          </div>
+          <div 
+            class="w-full max-w-[60px] rounded-t-lg transition-all duration-1000 ease-out group-hover:brightness-110"
+            style={`height: ${height}%; background-color: ${stat.color}`}
+          >
+          </div>
+          <div class="mt-4 text-sm font-medium text-gray-600 text-center group-hover:text-gray-900 transition-colors">
+            {stat.category}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <!-- Grid lines -->
+  <div class="absolute inset-0 flex flex-col justify-between p-6 pointer-events-none">
+    {[...Array(5)].map((_, i) => {
+      const value = 100 - i * 25;
+      return (
+        <div class="relative w-full border-t border-gray-100">
+          <span class="absolute -left-6 -translate-y-1/2 text-xs text-gray-400">
+            {value}%
+          </span>
+        </div>
+      );
+    })}
+  </div>
+</div>

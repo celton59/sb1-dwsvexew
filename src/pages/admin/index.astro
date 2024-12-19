@@ -1,0 +1,94 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getAdminStats, getRecentPosts } from '../../utils/admin';
+
+const stats = await getAdminStats();
+const recentPosts = await getRecentPosts();
+---
+
+<AdminLayout title="Dashboard">
+  <div class="space-y-6">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-2xl">📝</span>
+          <span class="text-sm font-medium text-green-600">+12%</span>
+        </div>
+        <h3 class="text-gray-600 text-sm font-medium">Posts</h3>
+        <p class="text-2xl font-bold text-gray-900 mt-1">{stats.totalPosts}</p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-2xl">👥</span>
+          <span class="text-sm font-medium text-green-600">+8%</span>
+        </div>
+        <h3 class="text-gray-600 text-sm font-medium">Views</h3>
+        <p class="text-2xl font-bold text-gray-900 mt-1">{stats.totalViews}</p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-2xl">💬</span>
+          <span class="text-sm font-medium text-green-600">+18%</span>
+        </div>
+        <h3 class="text-gray-600 text-sm font-medium">Comments</h3>
+        <p class="text-2xl font-bold text-gray-900 mt-1">{stats.totalComments}</p>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-2xl">📧</span>
+          <span class="text-sm font-medium text-green-600">+5%</span>
+        </div>
+        <h3 class="text-gray-600 text-sm font-medium">Subscribers</h3>
+        <p class="text-2xl font-bold text-gray-900 mt-1">{stats.totalSubscribers}</p>
+      </div>
+    </div>
+
+    <!-- Recent Posts -->
+    <div class="bg-white rounded-xl shadow-sm">
+      <div class="p-6 border-b border-gray-200">
+        <h2 class="text-lg font-semibold">Recent Posts</h2>
+      </div>
+      
+      <div class="divide-y divide-gray-200">
+        {recentPosts.map(post => (
+          <div class="p-6 flex items-center justify-between hover:bg-gray-50 transition-colors">
+            <div>
+              <h3 class="font-medium text-gray-900">{post.title}</h3>
+              <div class="flex items-center gap-4 mt-1">
+                <span class="text-sm text-gray-500">
+                  {post.publishDate?.toLocaleDateString()}
+                </span>
+                <span class="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                  {post.status}
+                </span>
+                <span class="text-sm text-gray-500">
+                  {post.views} views
+                </span>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <a
+                href={`/admin/posts/edit/${post.id}`}
+                class="p-2 text-gray-600 hover:text-blue-600 transition-colors"
+                title="Edit"
+              >
+                ✏️
+              </a>
+              <button
+                class="p-2 text-gray-600 hover:text-red-600 transition-colors"
+                title="Delete"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</AdminLayout>

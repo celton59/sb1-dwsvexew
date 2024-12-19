@@ -1,0 +1,39 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/footer/Footer.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" class="bg-gray-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Blog de tutoriales y afiliación" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+
+    <!-- Preload logo -->
+    <link rel="preload" href="/images/logo.svg" as="image" type="image/svg+xml" />
+    
+    <!-- Preconnect to font domain -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen text-gray-900 antialiased">
+    <Navigation />
+    <slot />
+    <Footer />
+
+    <style is:global>
+      /* ... (existing styles) ... */
+    </style>
+  </body>
+</html>

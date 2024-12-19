@@ -1,0 +1,35 @@
+---
+import { getAuthors } from '../../utils/authors';
+
+const authors = getAuthors();
+const author = authors[0]; // For now, we'll use the first author
+---
+
+<div class="bg-gray-50 rounded-xl p-6">
+  <div class="flex items-center gap-4 mb-4">
+    <img
+      src={author.avatar}
+      alt={author.name}
+      class="w-12 h-12 rounded-full object-cover"
+    />
+    <div>
+      <h3 class="font-semibold text-gray-900">{author.name}</h3>
+      <p class="text-sm text-gray-600">{author.role}</p>
+    </div>
+  </div>
+  <p class="text-sm text-gray-600 mb-4">{author.bio}</p>
+  <div class="flex gap-2">
+    {author.socialLinks.map(link => (
+      <a
+        href={link.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="w-8 h-8 flex items-center justify-center rounded-full bg-white
+          border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+        aria-label={link.platform}
+      >
+        <span class="text-lg">{link.icon}</span>
+      </a>
+    ))}
+  </div>
+</div>

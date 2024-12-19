@@ -1,0 +1,96 @@
+---
+import SearchIcon from '../icons/SearchIcon.astro';
+---
+
+<div class="relative">
+  <button
+    id="search-button"
+    class="w-10 h-10 flex items-center justify-center text-white hover:text-blue-200 
+      transition-colors duration-200 focus:outline-none"
+    aria-label="Buscar"
+  >
+    <SearchIcon />
+  </button>
+
+  <div 
+    id="search-container"
+    class="absolute right-0 top-0 hidden opacity-0 transform scale-95 transition-all duration-200"
+  >
+    <div class="relative flex items-center">
+      <input
+        type="search"
+        placeholder="Buscar artículos..."
+        class="w-[300px] md:w-[300px] w-[calc(100vw-2rem)] pl-10 pr-4 h-10 text-sm text-white placeholder-blue-200 
+          bg-blue-800/80 border border-blue-600/50 rounded-full
+          focus:outline-none focus:ring-2 focus:ring-blue-400/70
+          focus:border-blue-400/50"
+      />
+      <div class="absolute left-3 top-1/2 -translate-y-1/2 text-blue-300">
+        <SearchIcon />
+      </div>
+      <button
+        id="close-search"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Search Results Dropdown -->
+    <div class="hidden absolute mt-2 w-full bg-white rounded-lg shadow-lg border border-gray-200/80 
+      py-2 max-h-96 overflow-y-auto">
+      <div class="hidden px-4 py-2 text-sm text-gray-500 animate-pulse">
+        Buscando...
+      </div>
+      <div class="hidden px-4 py-2 text-sm text-gray-500">
+        No se encontraron resultados
+      </div>
+      <div class="space-y-1"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const searchButton = document.getElementById('search-button');
+  const searchContainer = document.getElementById('search-container');
+  const closeButton = document.getElementById('close-search');
+  const searchInput = searchContainer?.querySelector('input');
+
+  function openSearch() {
+    searchContainer?.classList.remove('hidden');
+    // Force a reflow before adding the classes
+    searchContainer?.offsetHeight;
+    searchContainer?.classList.remove('opacity-0', 'scale-95');
+    searchInput?.focus();
+  }
+
+  function closeSearch() {
+    searchContainer?.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      searchContainer?.classList.add('hidden');
+    }, 200);
+  }
+
+  searchButton?.addEventListener('click', openSearch);
+  closeButton?.addEventListener('click', (e) => {
+    e.preventDefault();
+    closeSearch();
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchButton?.contains(e.target as Node) && 
+        !searchContainer?.contains(e.target as Node)) {
+      closeSearch();
+    }
+  });
+
+  // Close on escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+</script>

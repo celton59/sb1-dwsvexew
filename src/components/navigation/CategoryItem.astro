@@ -1,0 +1,31 @@
+---
+import AccordionIcon from '../icons/AccordionIcon.astro';
+import SubCategoryItem from './SubCategoryItem.astro';
+import type { CategoryItem as CategoryItemType } from '../../types/navigation';
+
+interface Props {
+  item: CategoryItemType;
+}
+
+const { item } = Astro.props;
+---
+
+<li class="category-item" data-subcategory>
+  <div class="category-header flex items-center justify-between px-4 py-2">
+    <a href={item.href} class="text-sm text-gray-600 hover:text-blue-600">
+      {item.name}
+    </a>
+    {item.subcategories && (
+      <button class="subcategory-toggle p-1" aria-label="Toggle subcategories">
+        <AccordionIcon />
+      </button>
+    )}
+  </div>
+  {item.subcategories && (
+    <ul class="subcategories hidden pl-6 py-1 bg-gray-50">
+      {item.subcategories.map(sub => (
+        <SubCategoryItem {...sub} />
+      ))}
+    </ul>
+  )}
+</li>

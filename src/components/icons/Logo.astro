@@ -1,0 +1,24 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  class?: string;
+  width?: number;
+  height?: number;
+}
+
+const { 
+  class: className = "h-28 w-auto",
+  width = 920,
+  height = 236
+} = Astro.props;
+---
+
+<Image 
+  src="/images/logo.svg" 
+  alt="Logo" 
+  class={className}
+  width={width}
+  height={height}
+  loading="eager"
+/>

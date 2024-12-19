@@ -1,0 +1,34 @@
+---
+import type { Author } from '../../types/author';
+
+interface Props {
+  author: Author;
+  publishDate: Date;
+}
+
+const { author, publishDate } = Astro.props;
+---
+
+<div class="flex items-center gap-4 mb-8">
+  <img 
+    src={author.avatar} 
+    alt={author.name}
+    class="w-12 h-12 rounded-full object-cover"
+  />
+  <div>
+    <div class="flex items-center gap-2">
+      <a href="#" class="font-medium text-gray-900 hover:text-blue-600 transition-colors">
+        {author.name}
+      </a>
+      <span class="text-gray-400">·</span>
+      <span class="text-gray-500">
+        {publishDate.toLocaleDateString('es-ES', { 
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}
+      </span>
+    </div>
+    <p class="text-sm text-gray-600">{author.role}</p>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+---
+import type { TrendingTopic } from '../../../types/trending';
+
+interface Props {
+  topic: TrendingTopic;
+}
+
+const { topic } = Astro.props;
+---
+
+<div class="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+  <div class="p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center group-hover:scale-110 transition-transform">
+          <span class="text-3xl">{topic.icon}</span>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+            {topic.title}
+          </h3>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="text-sm text-gray-500">{topic.stats}</span>
+            <div class={`flex items-center gap-1 text-sm font-medium ${topic.trend.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
+              <span>{topic.trend}</span>
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path 
+                  stroke-linecap="round" 
+                  stroke-linejoin="round" 
+                  stroke-width="2" 
+                  d={topic.trend.startsWith('+') 
+                    ? "M8 12l4-4 4 4m-4-4v12" 
+                    : "M8 12l4 4 4-4m-4 4V4"}
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Articles -->
+    <div class="space-y-3">
+      {topic.articles.map((article, index) => (
+        <a 
+          href={`/blog/${article.slug}`}
+          class="block p-3 rounded-lg hover:bg-blue-50/50 transition-colors group/article"
+        >
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-blue-100/50 flex items-center justify-center text-blue-600 font-medium">
+              {index + 1}
+            </div>
+            <div class="flex-1">
+              <span class="text-gray-700 group-hover/article:text-blue-600 transition-colors line-clamp-1">
+                {article.title}
+              </span>
+              {article.views && (
+                <span class="text-sm text-gray-500">
+                  {article.views} lecturas
+                </span>
+              )}
+            </div>
+            <svg 
+              class="w-5 h-5 text-gray-400 group-hover/article:text-blue-500 transform group-hover/article:translate-x-1 transition-all" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>

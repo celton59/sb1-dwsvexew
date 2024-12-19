@@ -1,0 +1,97 @@
+---
+import type { MarkdownHeading } from 'astro';
+import IndexIcon from './icons/IndexIcon.astro';
+import ChevronIcon from './icons/ChevronIcon.astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+  title: string;
+}
+
+const { headings, title } = Astro.props;
+
+// Filter and transform headings
+const mainHeadings = headings.filter(h => h.depth === 2);
+const isQuestion = (text: string) => text.toLowerCase().includes('pregunta');
+
+// Separate into regular sections and FAQs
+const sections = mainHeadings.filter(h => !isQuestion(h.text));
+const faqs = mainHeadings.filter(h => isQuestion(h.text));
+---
+
+<div class="toc bg-white rounded-xl shadow-sm border border-gray-100 my-8" data-toc>
+  <div class="toc-container">
+    <div class="toc-header flex items-center justify-between p-4 border-b border-gray-100">
+      <div class="toc-title flex items-center gap-3">
+        <div class="w-10 h-10 flex items-center justify-center flex-shrink-0">
+          <IndexIcon />
+        </div>
+        <h4 class="text-xl font-semibold text-gray-900 whitespace-nowrap">Índice</h4>
+      </div>
+      <button 
+        class="toc-toggle w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors flex-shrink-0"
+        aria-label="Toggle table of contents"
+      >
+        <ChevronIcon />
+      </button>
+    </div>
+    <div class="toc-content p-4">
+      <!-- Rest of the content remains the same -->
+    </div>
+  </div>
+</div>
+
+<style>
+  .toc {
+    transition: all 0.3s ease;
+  }
+
+  .toc.collapsed {
+    max-height: 72px; /* Increased slightly to prevent text cut-off */
+    overflow: hidden;
+  }
+
+  .toc.collapsed .toc-header {
+    border-bottom: none;
+  }
+
+  .toc-toggle svg {
+    transition: transform 0.3s ease;
+  }
+
+  .toc-content {
+    transition: all 0.3s ease;
+  }
+
+  .dot {
+    flex-shrink: 0;
+  }
+
+  /* Ensure header items stay centered when collapsed */
+  .toc-header {
+    min-height: 72px;
+  }
+</style>
+
+<script>
+  const toc = document.querySelector('[data-toc]');
+  const tocToggle = toc?.querySelector('.toc-toggle');
+  const tocContent = toc?.querySelector('.toc-content');
+  const chevron = tocToggle?.querySelector('svg');
+
+  let isCollapsed = false;
+
+  tocToggle?.addEventListener('click', () => {
+    isCollapsed = !isCollapsed;
+    
+    if (isCollapsed) {
+      tocContent?.classList.add('hidden');
+      chevron?.classList.add('rotate-180');
+      toc?.classList.add('collapsed');
+    } else {
+      tocContent?.classList.remove('hidden');
+      chevron?.classList.remove('rotate-180');
+      toc?.classList.remove('collapsed');
+    }
+  });
+</script>

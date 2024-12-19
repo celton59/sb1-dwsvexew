@@ -1,0 +1,42 @@
+---
+import Layout from './Layout.astro';
+import type { CollectionEntry } from 'astro:content';
+import ArticleHeader from '../components/articles/ArticleHeader.astro';
+import ArticleContent from '../components/articles/ArticleContent.astro';
+import Breadcrumb from '../components/navigation/Breadcrumb.astro';
+import AuthorBio from '../components/articles/AuthorBio.astro';
+import RelatedArticles from '../components/articles/RelatedArticles.astro';
+import { getAuthors } from '../utils/authors';
+
+interface Props {
+  post: CollectionEntry<'posts'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const { headings } = await post.render();
+
+// Get the first author
+const authors = getAuthors();
+const author = authors[0];
+
+const breadcrumbItems = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Blog', href: '/blog' },
+  { label: post.data.category.charAt(0).toUpperCase() + post.data.category.slice(1), href: `/categoria/${post.data.category}` },
+  { label: post.data.title, href: `/blog/${post.slug}` }
+];
+---
+
+<Layout title={post.data.title}>
+  <article class="max-w-3xl mx-auto px-4 py-8">
+    <Breadcrumb items={breadcrumbItems} />
+    <ArticleHeader post={post} author={author} />
+    <ArticleContent headings={headings} title={post.data.title}>
+      <Content />
+    </ArticleContent>
+    <AuthorBio author={author} />
+  </article>
+  
+  <RelatedArticles currentPost={post} />
+</Layout>
